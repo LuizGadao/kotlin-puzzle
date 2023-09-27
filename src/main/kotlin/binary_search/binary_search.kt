@@ -1,11 +1,14 @@
+package binary_search
+
 import kotlin.system.measureTimeMillis
 
 fun main() {
-    val goldNumber = 145_444
-    val myList = IntArray(1_000_000) { it }
+    val goldNumber = -1//144_567
+    val myList = IntArray(10_000_000) { it }
 
     val duration = measureTimeMillis {
-        binarySearch(myList.asList(), goldNumber)
+        val myGoldNumber = binarySearch(myList.asList(), goldNumber)
+        println("my goldNumber is $myGoldNumber")
     }
 
     println("duration: $duration for search $goldNumber in ${myList.size}")
@@ -21,10 +24,10 @@ fun binarySearch(items: List<Int>, goldNumber:Int): Int? {
         val kick = items[middle]
 
         if (kick == goldNumber) {
-            return goldNumber
+            return kick
         }
 
-        if (kick < goldNumber) {
+        if (goldNumber < kick) {
             bigger = middle -1
         } else {
             smaller = middle + 1
