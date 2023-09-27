@@ -4,14 +4,18 @@ import java.io.File
 import kotlin.system.measureTimeMillis
 
 fun main() {
-    var candles = birthdayCakeCandles2(arrayOf(4, 3, 2, 1, 4))
-    println(candles)
+    var duration = measureTimeMillis {
+        val candles = birthdayCakeCandles2(getValues())
+        println(candles)
+    }
 
-//    val duration = measureTimeMillis {
-//        candles = birthdayCakeCandles(getValues())
-//        println(candles)
-//    }
-//    println("duration: $duration")
+    println("duration for solution 2: $duration")
+
+    duration = measureTimeMillis {
+        val candles = birthdayCakeCandles(getValues())
+        println(candles)
+    }
+    println("duration for solution 1: $duration")
 }
 
 fun birthdayCakeCandles(candles: Array<Int>): Int {
@@ -21,7 +25,7 @@ fun birthdayCakeCandles(candles: Array<Int>): Int {
         var equal = 1
         var y = i + 1
         while(y < candles.size) {
-            println("${candles[i]} - ${candles[y]}")
+            //println("${candles[i]} - ${candles[y]}")
             if (candles[i] == candles[y]) equal++
             y++
         }
@@ -53,5 +57,8 @@ fun birthdayCakeCandles2(candles: Array<Int>): Int {
 
 fun getValues() :Array<Int> {
     return File("src/main/resources/file_1.txt")
-        .readLines().flatMap { it.split(" ") }.map { it.toInt() }.toTypedArray()
+        .readLines()
+        .flatMap { it.split(" ") }
+        .map { it.toInt() }
+        .toTypedArray()
 }
