@@ -1,7 +1,20 @@
 import java.lang.NumberFormatException
 
 fun main() {
+    println(double(square(10)))
+    println(squareAndDouble(10))
+    val squareAndDouble = ::square compose ::double
+    println(squareAndDouble(10))
 
+    val result = strToIntResult("Luiz")
+    println("get result: ${result.getOrNull()}")
+    println("get exception: ${result.exceptionOrNull()}")
+}
+
+infix fun <A, B, C> ((A) -> B).compose(
+    g: (B) -> C
+) : (A) -> C = { a ->
+    g(this(a))
 }
 
 fun squareAndDouble(x: Int) = double(square(x))

@@ -17,7 +17,6 @@ fun lengthOfLongestSubstring(s: String): Int {
     var startIndex = 0
     var longestStr = ""
     var oldLongestStr = ""
-
     var nextChar = ""
 
     while (startIndex < s.length) {

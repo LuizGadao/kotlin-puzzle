@@ -56,7 +56,7 @@ fun birthdayCakeCandles2(candles: Array<Int>): Int {
 }
 
 fun getValues() :Array<Int> {
-    return File("src/leetcode.binary_search.main/resources/file_1.txt")
+    return File("src/leetcode.binary_search.algoExpert.main/resources/file_1.txt")
         .readLines()
         .flatMap { it.split(" ") }
         .map { it.toInt() }

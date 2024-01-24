@@ -3,7 +3,7 @@ package binary_search
 import kotlin.system.measureTimeMillis
 
 fun main() {
-    val goldNumber = -1//144_567
+    val goldNumber = 144_567
     val myList = IntArray(10_000_000) { it }
 
     val duration = measureTimeMillis {
