@@ -24,7 +24,7 @@ fun twoSumFast(nums: IntArray, target: Int): IntArray {
         val diff = target - value
 
         if (myHash.containsKey(diff))
-            return intArrayOf(myHash.get(diff)!!, index)
+            return intArrayOf(myHash[diff]!!, index)
         else
             myHash[value] = index
     }
