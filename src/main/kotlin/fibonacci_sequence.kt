@@ -36,8 +36,40 @@ fun fibonacciSequence(n: Int): List<Int> {
 
 }
 
+fun fibSequence(n: Int): List<Int> {
+    //fib(1) = [1]
+    //fib(2) = [1, 1]
+    //fib(3) = [1, 1, 2]
+    //fib(4) = [1, 1, 2, 3]
+    //fib(5) = [1, 1, 2, 3, 5]
+    //fib(6) = [1, 1, 2, 3, 5, 8]
+
+    if (n <= 0) return listOf()
+
+    var prev = 1
+    var next = 1
+    var result = prev
+
+    val sequence = mutableListOf<Int>()
+    sequence.add(prev)
+
+    repeat(n-1) {
+        sequence.add(result)
+        prev = next
+        next = result
+        result = next + prev
+    }
+
+    return sequence
+}
+
 fun main() {
     val value = 8
     println(fibonacciSequence(value))
     println(fibonacci(value))
+
+    println(fibSequence(1))
+    println(fibSequence(2))
+    println(fibSequence(3))
+    println(fibSequence(8))
 }

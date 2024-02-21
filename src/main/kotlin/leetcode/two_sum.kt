@@ -32,6 +32,9 @@ fun twoSumFast(nums: IntArray, target: Int): IntArray {
     throw Exception("invalid values")
 }
 
+fun test() {
+    println("test - luiz")
+}
 fun main() {
     twoSum(intArrayOf(2, 7, 11, 15), 9).forEach { println(it) }
     twoSumFast(intArrayOf(2, 7, 11, 15), 9).forEach { println(it) }
