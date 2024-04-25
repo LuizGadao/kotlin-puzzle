@@ -1,19 +1,40 @@
 package data_structure
 
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
-data class Element(
-    val value: String,
-    var next: Element? = null
+
+data class Element<T>(
+    val value: T,
+    var next: Element<T>? = null
 )
 
-class LinkedList {
+class Iterator<T>(
+    private var element: Element<T>? = null
+) {
 
-    var first: Element? = null
-    var last: Element? = null
+    fun hasNext(): Boolean {
+        return element?.next != null
+    }
+
+    fun getNext(): Element<T>? {
+        element = element?.next
+        return element
+    }
+}
+
+class LinkedList<T> {
+
+    var first: Element<T>? = null
+    var last: Element<T>? = null
 
     private var count = 0
 
-    fun add(value: String) {
+    val iterator: Iterator<T> by lazy {
+        Iterator(first)
+    }
+
+    fun add(value: T) {
         val new = Element(value = value)
         if (count == 0) {
             first = new
@@ -30,7 +51,7 @@ class LinkedList {
 
     fun remove(value: String) {
         var actual = first
-        var previous: Element? = null
+        var previous: Element<T>? = null
 
         (0 until count).forEach {
             if (actual?.value == value) {
@@ -59,7 +80,7 @@ class LinkedList {
         }
     }
 
-    fun get(position: Int) : Element? {
+    fun get(position: Int) : Element<T>? {
         var actual = first
         (0 until position).forEach { i ->
             if (i == position) {
@@ -78,8 +99,9 @@ class LinkedList {
 
 }
 
+@OptIn(ExperimentalTime::class)
 fun main() {
-    val myList = LinkedList()
+    val myList = LinkedList<String>()
     myList.add("AC")
     myList.add("SP")
     myList.add("CE")
@@ -116,4 +138,43 @@ fun main() {
     (0 until myList.getCount()).forEach {
         println("value: ${myList.get(it)?.value}")
     }
+
+    val qtd = 90_000
+    val myArray = Array<Int>(size = qtd) { 0 }
+    val myListTest = LinkedList<Int>()
+
+    var time = measureTime {
+        (0 until qtd).forEach {
+            myArray[it] = it
+        }
+    }
+
+    var timeList = measureTime {
+        (0 until qtd).forEach {
+            myListTest.add(it)
+        }
+    }
+
+    println("$time to add $qtd in Array")
+    println("$timeList to add $qtd in LinkedList")
+
+    time = measureTime {
+        (0 until qtd).forEach {
+            myArray[it]
+        }
+    }
+
+//    timeList = measureTime {
+//        (0 until qtd).forEach {
+//            myListTest.get(it)
+//        }
+//    }
+    timeList = measureTime {
+        while (myListTest.iterator.hasNext()) {
+            myListTest.iterator.getNext()
+        }
+    }
+
+    println("$time to get $qtd in Array")
+    println("$timeList to get $qtd in LinkedList")
 }
