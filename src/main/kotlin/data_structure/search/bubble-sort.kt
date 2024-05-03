@@ -2,11 +2,11 @@ package data_structure.search
 
 fun main() {
 
-    val values = Array(11) {
+    val values = Array(21) {
         (Math.random() * 1000).toInt()
     }
 
-    //values.forEach { println(it) }
+    values.forEach { println(it) }
 
     println()
     bubbleSort(values.clone())
@@ -18,11 +18,12 @@ fun main() {
     println("\nquick")
 
     val quick = values.clone()
-    quickSort(quick, 0, quick.size-1)
+    quickSort2(quick, 0, quick.size-1)
     println("qtd quick interactions: $countQ")
     quick.forEach { print("${it} - ") }
 
     println("\nsum: ${mySum(values, values.size)}")
+
 }
 
 fun bubbleSort(array: Array<Int>): Array<Int> {
@@ -161,4 +162,28 @@ fun partition(array: Array<Int>, low: Int, high: Int): Int {
         array[j] = aux
         countQ++
     }
+}
+
+fun quickSort2(array: Array<Int>, low: Int, high: Int){
+    if (low >= high) return
+
+    var i = low
+    var j = high
+    val pivot = array[(low + high) / 2]
+
+    while (i < j) {
+        while (array[i] < pivot) i++
+        while (array[j] > pivot) j--
+
+        if (i < j) {
+            val aux = array[i]
+            array[i] = array[j]
+            array[j] = aux
+            i++
+            j--
+        }
+    }
+
+    quickSort2(array, low, j)
+    quickSort(array, i, high)
 }
