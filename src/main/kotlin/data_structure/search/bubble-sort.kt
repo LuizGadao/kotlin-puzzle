@@ -8,9 +8,9 @@ fun main() {
 
     values.forEach { println(it) }
 
-    println()
-    bubbleSort(values.clone())
-    println("insertion")
+    println("bubblesort")
+    println(bubbleSort(values.clone()).joinToString { "$it" })
+    println("\ninsertion")
     insertionSort(values.clone()).forEach { print("${it} - ") }
     insertionSort2(values.clone())
     println("selection")
@@ -18,9 +18,12 @@ fun main() {
     println("\nquick")
 
     val quick = values.clone()
-    quickSort2(quick, 0, quick.size-1)
+    //quickSort2(quick, 0, quick.size-1)
+    quickSortV3(quick, 0, quick.size-1)
     println("qtd quick interactions: $countQ")
     quick.forEach { print("${it} - ") }
+
+    println("quisort v3")
 
     println("\nsum: ${mySum(values, values.size)}")
 
@@ -29,7 +32,7 @@ fun main() {
 fun bubbleSort(array: Array<Int>): Array<Int> {
 
     var count = 0
-    repeat(array.size) { i ->
+    /*repeat(array.size) { i ->
         var j = i + 1
         while (j < array.size) {
             if (array[i] > array[j]) {
@@ -41,6 +44,23 @@ fun bubbleSort(array: Array<Int>): Array<Int> {
 
             count++
         }
+    }*/
+
+    var i = 0
+    while (i < array.size) {
+        var j = i + 1
+
+        while (j < array.size) {
+            if (array[i] > array[j]) {
+                val aux = array[i]
+                array[i] = array[j]
+                array[j] = aux
+            }
+            count++
+            j++
+        }
+
+        i++
     }
 
     println("\nqtd bubble interactions: $count")
@@ -124,7 +144,7 @@ fun selectionSort(array: Array<Int>) : Array<Int> {
 }
 
 fun mySum(array: Array<Int>, n: Int) : Int {
-    if (n ==0) return 0
+    if (n == 0) return 0
 
     return array[n-1] + mySum(array, n-1)
 }
@@ -185,5 +205,31 @@ fun quickSort2(array: Array<Int>, low: Int, high: Int){
     }
 
     quickSort2(array, low, j)
-    quickSort(array, i, high)
+    quickSort2(array, i, high)
+}
+
+fun quickSortV3(array: Array<Int>, low: Int, high: Int) {
+
+    if (low >= high) return
+
+    var left = low
+    var right = high
+    val pivot = array[(low + high) / 2]
+
+    while (left < right) {
+        while (array[left] < pivot) left++
+        while (array[right] > pivot) right--
+
+        if (left <= right) {
+            val aux = array[left]
+            array[left] = array[right]
+            array[right] = aux
+            left++
+            right--
+        }
+    }
+
+    quickSortV3(array, low, right)
+    quickSortV3(array, left, high)
+
 }
